@@ -34,7 +34,30 @@ public class Main {
 
         GL11.glEnable(GL11.GL_TEXTURE_2D);
 
-        Texture tex = new Texture("D:\\Code\\SubjectProject\\DHMT\\ComputerGraphics\\src\\main\\resources\\img\\mushroom_sprite_pack.png");
+        // Define vertices for a square (2 triangles)
+        float[] vertices = new float[] {
+                -0.5f, 0.5f, 0,   // TOP LEFT
+                0.5f, 0.5f, 0,    // TOP RIGHT
+                0.5f, -0.5f, 0,   // BOTTOM RIGHT
+                0.5f, -0.5f, 0,   // BOTTOM RIGHT
+                -0.5f, -0.5f, 0,  // BOTTOM LEFT
+                -0.5f, 0.5f, 0    // TOP LEFT
+        };
+
+        // Define texture coordinates for 2 triangles
+        float[] texture = new float[] {
+                0.0f, 0.0f,  // TOP LEFT
+                1.0f, 0.0f,  // TOP RIGHT
+                1.0f, 1.0f,  // BOTTOM RIGHT
+                1.0f, 1.0f,  // BOTTOM RIGHT
+                0.0f, 1.0f,  // BOTTOM LEFT
+                0.0f, 0.0f   // TOP LEFT
+        };
+
+
+        Model model = new Model(vertices, texture);
+
+        Texture tex = new Texture("D:\\Code\\SubjectProject\\DHMT\\ComputerGraphics\\src\\main\\resources\\img\\screenshot_67.png");
 
         // Main loop
         while (!GLFW.glfwWindowShouldClose(window)) {
@@ -52,14 +75,7 @@ public class Main {
             // Bind texture
             tex.bind();
 
-            // Draw Quads
-            glBegin(GL11.GL_QUADS);
-            // Toàn bộ sprite pack (0-1 cho cả 192x32)
-                glTexCoord2f(0.0f, 0.0f); glVertex2f(-0.5f, 0.5f);  // Top-left
-                glTexCoord2f(1.0f, 0.0f); glVertex2f(0.5f, 0.5f);   // Top-right
-                glTexCoord2f(1.0f, 1.0f); glVertex2f(0.5f, -0.5f); // Bottom-right
-                glTexCoord2f(0.0f, 1.0f); glVertex2f(-0.5f, -0.5f); // Bottom-left
-            glEnd();
+            model.render();
 
             // Swap buffers
             GLFW.glfwSwapBuffers(window);
