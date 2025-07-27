@@ -56,8 +56,9 @@ public class Main {
         };
 
         Model model = new Model(vertices, texture, indices);
+        Shader shader = new Shader("shader");
 
-        Texture tex = new Texture("D:\\Code\\SubjectProject\\DHMT\\ComputerGraphics\\src\\main\\resources\\img\\screenshot_67.png");
+//        Texture tex = new Texture("D:\\Code\\SubjectProject\\DHMT\\ComputerGraphics\\src\\main\\resources\\img\\screenshot_67.png");
 
         // Main loop
         while (!GLFW.glfwWindowShouldClose(window)) {
@@ -73,8 +74,8 @@ public class Main {
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
             // Bind texture
-            tex.bind();
-
+//            tex.bind();
+            shader.bind();
             model.render();
 
             // Swap buffers
@@ -82,7 +83,7 @@ public class Main {
         }
 
         // Clean up
-        tex.cleanup();
+//        tex.cleanup();
         GLFW.glfwDestroyWindow(window);
         GLFW.glfwTerminate();
     }
