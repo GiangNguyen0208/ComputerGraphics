@@ -36,26 +36,26 @@ public class Main {
 
         // Define vertices for a square (2 triangles)
         float[] vertices = new float[] {
-                -0.5f, 0.5f, 0,   // TOP LEFT
-                0.5f, 0.5f, 0,    // TOP RIGHT
-                0.5f, -0.5f, 0,   // BOTTOM RIGHT
-                0.5f, -0.5f, 0,   // BOTTOM RIGHT
-                -0.5f, -0.5f, 0,  // BOTTOM LEFT
-                -0.5f, 0.5f, 0    // TOP LEFT
+                -0.5f, 0.5f, 0,   // TOP LEFT       0
+                0.5f, 0.5f, 0,    // TOP RIGHT      1
+                0.5f, -0.5f, 0,   // BOTTOM RIGHT   2
+                -0.5f, -0.5f, 0,  // BOTTOM LEFT    3
         };
 
         // Define texture coordinates for 2 triangles
         float[] texture = new float[] {
-                0.0f, 0.0f,  // TOP LEFT
-                1.0f, 0.0f,  // TOP RIGHT
-                1.0f, 1.0f,  // BOTTOM RIGHT
-                1.0f, 1.0f,  // BOTTOM RIGHT
-                0.0f, 1.0f,  // BOTTOM LEFT
-                0.0f, 0.0f   // TOP LEFT
+                0.0f, 0.0f,  // TOP LEFT        0
+                1.0f, 0.0f,  // TOP RIGHT       1
+                1.0f, 1.0f,  // BOTTOM RIGHT    2
+                0.0f, 1.0f,  // BOTTOM LEFT     3
         };
 
+        int[] indices = new int[] {
+                0, 1, 2,
+                2, 3, 0,
+        };
 
-        Model model = new Model(vertices, texture);
+        Model model = new Model(vertices, texture, indices);
 
         Texture tex = new Texture("D:\\Code\\SubjectProject\\DHMT\\ComputerGraphics\\src\\main\\resources\\img\\screenshot_67.png");
 
