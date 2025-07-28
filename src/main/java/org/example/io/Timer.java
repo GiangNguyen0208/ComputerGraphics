@@ -1,4 +1,4 @@
-package org.example;
+package org.example.io;
 
 public class Timer {
     public static double getTime() {

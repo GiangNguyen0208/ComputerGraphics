@@ -1,5 +1,11 @@
-package org.example;
+package org.example.game;
 
+import org.example.io.Timer;
+import org.example.io.Window;
+import org.example.render.Camera;
+import org.example.render.Model;
+import org.example.render.Shader;
+import org.example.render.Texture;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
@@ -7,8 +13,6 @@ import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 
 import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL11C.*;
 
 public class Main {
     public static void main(String[] args) {

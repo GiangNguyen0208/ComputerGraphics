@@ -1,4 +1,4 @@
-package org.example;
+package org.example.io;
 
 import static org.lwjgl.glfw.GLFW.*;
 

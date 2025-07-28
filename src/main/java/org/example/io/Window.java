@@ -1,4 +1,4 @@
-package org.example;
+package org.example.io;
 
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
