@@ -7,6 +7,7 @@ import org.example.render.Model;
 import org.example.render.Shader;
 import org.example.render.Texture;
 import org.example.world.TileRenderer;
+import org.example.world.World;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
@@ -68,9 +69,7 @@ public class Main {
 
         Texture tex = new Texture("src/main/resources/img/screenshot_67.png");
 
-        Matrix4f scale = new Matrix4f()
-                .translate(new Vector3f(0, 0, 0))
-                .scale(32);
+        World world = new World();
 
         Matrix4f target = new Matrix4f();
 
@@ -99,15 +98,26 @@ public class Main {
                 unprocessed -= frame_cap;
                 can_render = true;
 
-                target = scale;
                 // Esc button to close window
                 if (window.getInput().isKeyDown(GLFW_KEY_ESCAPE)) {
                     glfwSetWindowShouldClose(window.getWindow(), true);
                 }
 
-                if (window.getInput().isKeyReleased(GLFW_KEY_A)) {
-                    System.out.println("TRUE");
+                if (window.getInput().isKeyDown(GLFW_KEY_A)) {
+                    camera.getPosition().sub(new Vector3f(2, 0, 0));
                 }
+
+                if (window.getInput().isKeyDown(GLFW_KEY_D)) {
+                    camera.getPosition().sub(new Vector3f(-2, 0, 0));
+                }
+                if (window.getInput().isKeyDown(GLFW_KEY_W)) {
+                    camera.getPosition().sub(new Vector3f(0, -2, 0));
+                }
+
+                if (window.getInput().isKeyDown(GLFW_KEY_S)) {
+                    camera.getPosition().sub(new Vector3f(0, 2, 0));
+                }
+
 
                 window.update();
                 if (frame_time >= 1.0) {
@@ -127,11 +137,8 @@ public class Main {
 //                model.render();
 //                tex.bind(0);
 
-                for (int i = 0; i < 8; i++) {
-                    for (int j = 0; j < 4; j++) {
-                        tiles.renderTile((byte) 0, i, j, shader, scale, camera);
-                    }
-                }
+                world.render(tiles, shader, camera);
+
                 window.swapBuffers();
                 frames++;
             }
