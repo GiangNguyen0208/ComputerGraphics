@@ -17,15 +17,10 @@ public class Main {
             throw new IllegalStateException("Unable to initialize GLFW");
         }
 
-        // Create a window
-        long window = GLFW.glfwCreateWindow(640, 480, "Window", 0, 0);
-        if (window == 0) {
-            GLFW.glfwTerminate();
-            throw new RuntimeException("Failed to create the GLFW window");
-        }
+        Window window = new Window();
+        window.setSize(100, 100);
+        window.createWindow("TRUONG NGUYEN HUONG GIANG - 21130338");
 
-        // Make the OpenGL context current
-        GLFW.glfwMakeContextCurrent(window);
         GL.createCapabilities();
 
         // Enable v-sync
@@ -82,7 +77,7 @@ public class Main {
         double unprocessed = 0;
 
         // Main loop
-        while (!GLFW.glfwWindowShouldClose(window)) {
+        while (!window.shouldClose()) {
             boolean can_render = false;
 
             double time_2 = Timer.getTime();
@@ -98,9 +93,9 @@ public class Main {
 
                 target = scale;
                 // Esc button to close window
-                if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_TRUE) {
-                    glfwSetWindowShouldClose(window, true);
-                }
+//                if (glfwGetKey(window., GLFW_KEY_ESCAPE) == GLFW_TRUE) {
+//                    glfwSetWindowShouldClose(window, true);
+//                }
                 // Poll for window events
                 GLFW.glfwPollEvents();
                 if (frame_time >= 1.0) {
@@ -120,14 +115,13 @@ public class Main {
                 tex.bind(0);
                 model.render();
 
-                // Swap buffers
-                GLFW.glfwSwapBuffers(window);
+                window.swapBuffers();
                 frames++;
             }
         }
         // Clean up
         tex.cleanup();
-        GLFW.glfwDestroyWindow(window);
+        window.destroyWindow();
         GLFW.glfwTerminate();
     }
 }
