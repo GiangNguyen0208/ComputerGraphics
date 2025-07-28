@@ -1,5 +1,6 @@
 package org.example;
 
+import org.joml.Matrix4f;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
@@ -60,6 +61,14 @@ public class Main {
 
         Texture tex = new Texture("D:\\Code\\SubjectProject\\DHMT\\ComputerGraphics\\src\\main\\resources\\img\\screenshot_67.png");
 
+        Matrix4f projection = new Matrix4f()
+                .ortho2D(-640/2, 640/2, -480/2, 480/2);
+        Matrix4f scale = new Matrix4f().scale(128);
+
+        Matrix4f target = new Matrix4f();
+
+        projection.mul(scale, target);
+
         // Main loop
         while (!GLFW.glfwWindowShouldClose(window)) {
             // Esc button to close window
@@ -76,6 +85,7 @@ public class Main {
             // Bind texture
             shader.bind();
             shader.setUniform("sampler", 0);
+            shader.setUniform("projection", target);
             tex.bind(0);
             model.render();
 
