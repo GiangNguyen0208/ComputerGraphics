@@ -2,11 +2,14 @@ package org.example.world;
 
 public class Tile {
     public static Tile tiles[] = new Tile[16];
-    public static final Tile test_tile = new Tile((byte) 0, "screenshot_67");
+    public static byte not = 0;  // Number of Tiles
+    public static final Tile test_tile = new Tile("test");
+    public static final Tile test2 = new Tile("checker");
     private byte id;
     private String texture;
-    public Tile(byte id, String texture) {
-        this.id = id;
+    public Tile(String texture) {
+        this.id = not;
+        not++;
         this.texture = texture;
         if (tiles[id] != null) {
             throw new IllegalStateException("Tiles at [" + id +"] already being used!");

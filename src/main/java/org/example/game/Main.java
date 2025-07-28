@@ -6,6 +6,7 @@ import org.example.render.Camera;
 import org.example.render.Model;
 import org.example.render.Shader;
 import org.example.render.Texture;
+import org.example.world.Tile;
 import org.example.world.TileRenderer;
 import org.example.world.World;
 import org.joml.Matrix4f;
@@ -67,13 +68,10 @@ public class Main {
 //        Model model = new Model(vertices, texture, indices);
         Shader shader = new Shader("shader");
 
-        Texture tex = new Texture("src/main/resources/img/screenshot_67.png");
-
         World world = new World();
 
-        Matrix4f target = new Matrix4f();
-
-        camera.setPosition(new Vector3f(-100, 0, 0));
+        world.setTile(Tile.test2, 0, 0);
+        world.setTile(Tile.test2, 63, 63);
 
         double frame_cap = 1.0/60.0;
 
@@ -104,20 +102,21 @@ public class Main {
                 }
 
                 if (window.getInput().isKeyDown(GLFW_KEY_A)) {
-                    camera.getPosition().sub(new Vector3f(2, 0, 0));
+                    camera.getPosition().sub(new Vector3f(-5, 0, 0));
                 }
 
                 if (window.getInput().isKeyDown(GLFW_KEY_D)) {
-                    camera.getPosition().sub(new Vector3f(-2, 0, 0));
+                    camera.getPosition().sub(new Vector3f(5, 0, 0));
                 }
                 if (window.getInput().isKeyDown(GLFW_KEY_W)) {
-                    camera.getPosition().sub(new Vector3f(0, -2, 0));
+                    camera.getPosition().sub(new Vector3f(0, 5, 0));
                 }
 
                 if (window.getInput().isKeyDown(GLFW_KEY_S)) {
-                    camera.getPosition().sub(new Vector3f(0, 2, 0));
+                    camera.getPosition().sub(new Vector3f(0, -5, 0));
                 }
 
+                world.correctCamera(camera, window);
 
                 window.update();
                 if (frame_time >= 1.0) {
@@ -144,7 +143,6 @@ public class Main {
             }
         }
         // Clean up
-        tex.cleanup();
         window.destroyWindow();
         GLFW.glfwTerminate();
     }
