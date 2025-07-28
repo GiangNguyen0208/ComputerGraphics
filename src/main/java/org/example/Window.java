@@ -1,5 +1,6 @@
 package org.example;
 
+import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -8,6 +9,14 @@ public class Window {
     private long window;
     private int width, height;
     private boolean fullscreen;
+    public static void setCallbacks() {
+        glfwSetErrorCallback(new GLFWErrorCallback() {
+            @Override
+            public void invoke(int error, long description) {
+                throw new IllegalStateException(GLFWErrorCallback.getDescription(description));
+            }
+        });
+    }
     public Window() {
         setSize(640, 480);
         setFullscreen(false);

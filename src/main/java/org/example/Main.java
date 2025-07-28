@@ -12,13 +12,15 @@ import static org.lwjgl.opengl.GL11C.*;
 
 public class Main {
     public static void main(String[] args) {
+        Window.setCallbacks();
+
         // Initialize GLFW
-        if (!GLFW.glfwInit()) {
+        if (!glfwInit()) {
             throw new IllegalStateException("Unable to initialize GLFW");
         }
 
         Window window = new Window();
-        window.setSize(1024, 76 8);
+        window.setSize(1024, 768);
         window.setFullscreen(true);
         window.createWindow("TRUONG NGUYEN HUONG GIANG - 21130338");
 
