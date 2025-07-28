@@ -18,7 +18,8 @@ public class Main {
         }
 
         Window window = new Window();
-        window.setSize(100, 100);
+        window.setSize(1024, 76 8);
+        window.setFullscreen(true);
         window.createWindow("TRUONG NGUYEN HUONG GIANG - 21130338");
 
         GL.createCapabilities();
@@ -29,7 +30,7 @@ public class Main {
         // Set clear color to black
         GL11.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-        Camera camera = new Camera(640, 480);
+        Camera camera = new Camera(window.getWidth(), window.getHeight());
 
         GL11.glEnable(GL11.GL_TEXTURE_2D);
 
@@ -93,9 +94,9 @@ public class Main {
 
                 target = scale;
                 // Esc button to close window
-//                if (glfwGetKey(window., GLFW_KEY_ESCAPE) == GLFW_TRUE) {
-//                    glfwSetWindowShouldClose(window, true);
-//                }
+                if (glfwGetKey(window.getWindow(), GLFW_KEY_ESCAPE) == GLFW_TRUE) {
+                    glfwSetWindowShouldClose(window.getWindow(), true);
+                }
                 // Poll for window events
                 GLFW.glfwPollEvents();
                 if (frame_time >= 1.0) {

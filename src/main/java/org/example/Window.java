@@ -7,25 +7,33 @@ import static org.lwjgl.glfw.GLFW.*;
 public class Window {
     private long window;
     private int width, height;
+    private boolean fullscreen;
     public Window() {
         setSize(640, 480);
+        setFullscreen(false);
     }
 
     public void createWindow(String title) {
-        window = glfwCreateWindow(width, height, title, 0, 0);
+
+        window = glfwCreateWindow(
+                width,
+                height,
+                title,
+                fullscreen ? glfwGetPrimaryMonitor() : 0,
+                0);
 
         if (window == 0) {
             throw new IllegalStateException("Fail to create window!");
         }
-        GLFWVidMode vid = glfwGetVideoMode(glfwGetPrimaryMonitor());
-        glfwSetWindowPos(window,
-                (vid.width() - width)/2,
-                (vid.height() - height)/2);
+        if (!fullscreen) {
+            GLFWVidMode vid = glfwGetVideoMode(glfwGetPrimaryMonitor());
+            glfwSetWindowPos(window,
+                    (vid.width() - width)/2,
+                    (vid.height() - height)/2);
 
-        glfwShowWindow(window);
-
+            glfwShowWindow(window);
+        }
         glfwMakeContextCurrent(window);
-
     }
     public boolean shouldClose() {
         return glfwWindowShouldClose(window);
@@ -40,20 +48,19 @@ public class Window {
         this.width = width;
         this.height = height;
     }
-
+    public void setFullscreen(boolean fullscreen) {
+        this.fullscreen = fullscreen;
+    }
+    public boolean getFullscreen() {
+        return fullscreen;
+    }
     public int getWidth() {
         return width;
     }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
     public int getHeight() {
         return height;
     }
-
-    public void setHeight(int height) {
-        this.height = height;
+    public long getWindow() {
+        return window;
     }
 }
