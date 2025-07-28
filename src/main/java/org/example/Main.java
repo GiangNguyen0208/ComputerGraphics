@@ -1,6 +1,7 @@
 package org.example;
 
 import org.joml.Matrix4f;
+import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
@@ -17,7 +18,7 @@ public class Main {
         }
 
         // Create a window
-        long window = GLFW.glfwCreateWindow(800, 600, "Window", 0, 0);
+        long window = GLFW.glfwCreateWindow(640, 480, "Window", 0, 0);
         if (window == 0) {
             GLFW.glfwTerminate();
             throw new RuntimeException("Failed to create the GLFW window");
@@ -32,6 +33,8 @@ public class Main {
 
         // Set clear color to black
         GL11.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
+        Camera camera = new Camera(640, 480);
 
         GL11.glEnable(GL11.GL_TEXTURE_2D);
 
@@ -61,16 +64,19 @@ public class Main {
 
         Texture tex = new Texture("D:\\Code\\SubjectProject\\DHMT\\ComputerGraphics\\src\\main\\resources\\img\\screenshot_67.png");
 
-        Matrix4f projection = new Matrix4f()
-                .ortho2D(-640/2, 640/2, -480/2, 480/2);
-        Matrix4f scale = new Matrix4f().scale(128);
+
+        Matrix4f scale = new Matrix4f()
+                .translate(new Vector3f(100, 0, 0))
+                .scale(64);
 
         Matrix4f target = new Matrix4f();
 
-        projection.mul(scale, target);
+        camera.setPosition(new Vector3f(-100, 0, 0));
 
         // Main loop
         while (!GLFW.glfwWindowShouldClose(window)) {
+            target = scale;
+
             // Esc button to close window
             if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_TRUE) {
                 glfwSetWindowShouldClose(window, true);
@@ -85,7 +91,7 @@ public class Main {
             // Bind texture
             shader.bind();
             shader.setUniform("sampler", 0);
-            shader.setUniform("projection", target);
+            shader.setUniform("projection", camera.getProjection().mul(target));
             tex.bind(0);
             model.render();
 
