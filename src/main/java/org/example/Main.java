@@ -96,9 +96,10 @@ public class Main {
 
                 target = scale;
                 // Esc button to close window
-                if (glfwGetKey(window.getWindow(), GLFW_KEY_ESCAPE) == GLFW_TRUE) {
+                if (window.getInput().isKeyDown(GLFW_KEY_ESCAPE)) {
                     glfwSetWindowShouldClose(window.getWindow(), true);
                 }
+
                 // Poll for window events
                 GLFW.glfwPollEvents();
                 if (frame_time >= 1.0) {

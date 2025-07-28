@@ -9,6 +9,7 @@ public class Window {
     private long window;
     private int width, height;
     private boolean fullscreen;
+    private Input input;
     public static void setCallbacks() {
         glfwSetErrorCallback(new GLFWErrorCallback() {
             @Override
@@ -23,7 +24,6 @@ public class Window {
     }
 
     public void createWindow(String title) {
-
         window = glfwCreateWindow(
                 width,
                 height,
@@ -40,9 +40,11 @@ public class Window {
                     (vid.width() - width)/2,
                     (vid.height() - height)/2);
 
-            glfwShowWindow(window);
         }
+        glfwShowWindow(window);
         glfwMakeContextCurrent(window);
+
+        input = new Input(window);
     }
     public boolean shouldClose() {
         return glfwWindowShouldClose(window);
@@ -71,5 +73,8 @@ public class Window {
     }
     public long getWindow() {
         return window;
+    }
+    public Input getInput() {
+        return input;
     }
 }
