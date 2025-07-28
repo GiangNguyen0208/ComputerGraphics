@@ -73,32 +73,58 @@ public class Main {
 
         camera.setPosition(new Vector3f(-100, 0, 0));
 
+        double frame_cap = 1.0/60.0;
+
+        double frame_time = 0;
+        int frames = 0;
+
+        double time = Timer.getTime();
+        double unprocessed = 0;
+
         // Main loop
         while (!GLFW.glfwWindowShouldClose(window)) {
-            target = scale;
+            boolean can_render = false;
 
-            // Esc button to close window
-            if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_TRUE) {
-                glfwSetWindowShouldClose(window, true);
+            double time_2 = Timer.getTime();
+            double passed = time_2 - time;
+            unprocessed += passed;
+            frame_time += passed;
+
+            time = time_2;
+
+            while (unprocessed >= frame_cap) {
+                unprocessed -= frame_cap;
+                can_render = true;
+
+                target = scale;
+                // Esc button to close window
+                if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_TRUE) {
+                    glfwSetWindowShouldClose(window, true);
+                }
+                // Poll for window events
+                GLFW.glfwPollEvents();
+                if (frame_time >= 1.0) {
+                    frame_time = 0;
+                    System.out.println("FPS: " + frames);
+                    frames = 0;
+                }
             }
+            if (can_render) {
+                // Clear the screen
+                GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
-            // Poll for window events
-            GLFW.glfwPollEvents();
+                // Bind texture
+                shader.bind();
+                shader.setUniform("sampler", 0);
+                shader.setUniform("projection", camera.getProjection().mul(target));
+                tex.bind(0);
+                model.render();
 
-            // Clear the screen
-            GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-
-            // Bind texture
-            shader.bind();
-            shader.setUniform("sampler", 0);
-            shader.setUniform("projection", camera.getProjection().mul(target));
-            tex.bind(0);
-            model.render();
-
-            // Swap buffers
-            GLFW.glfwSwapBuffers(window);
+                // Swap buffers
+                GLFW.glfwSwapBuffers(window);
+                frames++;
+            }
         }
-
         // Clean up
         tex.cleanup();
         GLFW.glfwDestroyWindow(window);
