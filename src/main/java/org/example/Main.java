@@ -21,7 +21,7 @@ public class Main {
 
         Window window = new Window();
         window.setSize(1024, 768);
-        window.setFullscreen(true);
+        window.setFullscreen(false);
         window.createWindow("TRUONG NGUYEN HUONG GIANG - 21130338");
 
         GL.createCapabilities();
@@ -65,7 +65,7 @@ public class Main {
 
         Matrix4f scale = new Matrix4f()
                 .translate(new Vector3f(100, 0, 0))
-                .scale(64);
+                .scale(128);
 
         Matrix4f target = new Matrix4f();
 
@@ -100,8 +100,11 @@ public class Main {
                     glfwSetWindowShouldClose(window.getWindow(), true);
                 }
 
-                // Poll for window events
-                GLFW.glfwPollEvents();
+                if (window.getInput().isKeyReleased(GLFW_KEY_A)) {
+                    System.out.println("TRUE");
+                }
+
+                window.update();
                 if (frame_time >= 1.0) {
                     frame_time = 0;
                     System.out.println("FPS: " + frames);

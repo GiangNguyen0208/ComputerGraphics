@@ -77,4 +77,10 @@ public class Window {
     public Input getInput() {
         return input;
     }
+    public void update() {
+        if (input != null) {
+            input.update();
+        }
+        glfwPollEvents();
+    }
 }
